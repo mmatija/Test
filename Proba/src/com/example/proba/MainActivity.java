@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,6 +16,8 @@ import android.widget.LinearLayout;
 public class MainActivity extends Activity {
 
 	boolean go=true;
+	boolean skaliraj=false;
+	int i=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,6 +39,8 @@ public class MainActivity extends Activity {
 						e.printStackTrace();
 					}
 					go=true;
+					if(i%2==0) skaliraj=true;
+					i++;
 				}
 			}
 		});
@@ -79,13 +82,19 @@ public class MainActivity extends Activity {
 		public void onDraw(Canvas canvas){
 			super.onDraw(canvas);
 			x+=10;
+			y=screenH-duck.getHeight();
 			canvas.drawBitmap(bgr, 0, 0, null);
-			canvas.drawBitmap(duck, x, y, null);
+			//canvas.drawBitmap(duck, x, y, null);
 			while(go==false){
 				//cekaj u beskonacnoj petlji dok se go ne promijeni u true
 			}
+			if (skaliraj==true){
+				skaliraj=false;
+				canvas.scale(1.5f, 1.50f, x+duck.getWidth()/2, y+duck.getHeight()/2);
+			}
 			if (go==true){
-			go=false;
+			go=false; 
+			canvas.drawBitmap(duck, x, y,null);
 			invalidate();
 			}
 		}
